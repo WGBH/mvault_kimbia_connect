@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Passport/MVault Test</title>
+  
+  <!-- jQuery -->
+  <script src="//code.jquery.com/jquery-2.2.3.min.js"></script>
+    
+  <!-- Google Analytics base script -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-339013-24', 'auto');  // wgbh.org property ID
+  ga('send', 'pageview');
+
+  </script>
+  <!-- End Google Analytics -->
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .wrapper {
+      width: 75%;
+      min-width: 480px;
+      margin: 0 auto;
+    }
+    #mvaultLoading, #mvaultContinue {
+      visibility: hidden;
+      position: absolute;
+      left: 0px; top: 0px;
+      width:100%; height:100%;
+      text-align:center;
+      z-index: 1000; 
+      background-color:rgba(0,0,0,0.8);
+    }​
+    #mvaultActionContent, #mvaultLoadingInner {
+      text-align: center;
+    }
+    #mvaultActionContent {
+      background-color: #fff;
+      width: 33%;
+      min-width: 300px;
+      margin: 30px auto;
+      border-radius: 0.5em;
+      padding: 15px;
+    }
+    #mvaultLoadingInner {
+      color: #555;
+    }
+</style>
+
+</head>
+<body>
+  <div class="wrapper">
+    <h1> This is a Passport/MVault test</h1>
+    <p>Here is my form: </p>
+    <div id="myForm">
+        <script src='https://widgets.kimbia.com/widgets/formChooser.js?id=4AECOY9&oncomplete=kimbiaComboTracker'></script>
+  <!-- 
+        <script src='https://widgets.kimbia.com/widgets/form.js?channel=testcampaignv5/38474&oncomplete=kimbiaComboTracker'></script>  
+   -->
+    </div>
+  
+    <div id="output">
+    </div>
+  
+    <!-- mvault modals -->
+    <div id="mvaultLoading">
+      <div id="mvaultLoadingInner" >
+        <i class="fa fa-spinner fa-2x fa-spin"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="mvaultContinue" >
+    <div id="mvaultActionContent" >
+    </div>
+  </div>
+  <script src="wgbh_kimbia_comboTrackerV2_passport_20160422.js"></script>  
+</body>
+
+</html>
