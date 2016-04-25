@@ -7,11 +7,6 @@
  * - Google Analytics
 **/
 
-function debugIt(obj) {
-  console.log(obj);
-}
-
-
 /******* Connection to MVault for Passport *******/
 /* Helper functions for MVaultConnect link */
 function winHasJSON(obj) {
@@ -24,57 +19,65 @@ function winHasJSON(obj) {
   return ret;
 }
 
-function showFinalModal(loadindic, mvaultContinue, mvaultActionContent, ctaHeader, ctaMsg, ctaLabel, nextUrl) {
-  debugIt('Showing final');
+function showFinalModal(ctaHeader, ctaMsg, ctaLabel, nextUrl) {
+  console.log('Showing final');
   if (true === true ) {
-    $(mvaultActionContent).html("<div id='membershipVaultRtProvResp' class='mVRtPR'><img src='https://rmpbs.secure.force.com/support/resource/1455151540000/RMPBSPassportLogo' style='max-width:100%; height:auto' /><h3> " + ctaHeader + " </h3><p> " + ctaMsg + " </p> <a class='button button-activate' href='" + nextUrl + "' target='_blank'  >" + ctaLabel + "</a></div>");
-    loadindic.style.visibility = "hidden";
-    $(loadindic).remove();
-    $(mvaultContinue).detach();
-    $("body").prepend(mvaultContinue);
-    mvaultContinue.style.visibility = "visible";
+    // Remove loading spinner
+    $('#mvaultModal').empty().append('<div id="mvaultResponse"></div>');
+    $('#mvaultResponse').html("<div id='membershipVaultRtProvResp' class='mVRtPR'><img src='https://rmpbs.secure.force.com/support/resource/1455151540000/RMPBSPassportLogo' style='max-width:100%; height:auto' /><h3> " + ctaHeader + " </h3><p> " + ctaMsg + " </p> <a class='button button-activate' href='" + nextUrl + "' target='_blank'  >" + ctaLabel + "</a></div>");
+    $('#mvaultResponse').css({ backgroundColor: '#fff', width: '33%', minWidth: '300px', margin: '30px auto', borderRadius: '0.5em', padding: '15px'});
   }
 }
 
 function sendObj(obj) {
-  debugIt('Sending info');
-  var loadindic = document.getElementById("mvaultLoading");
-  var mvaultContinue = document.getElementById("mvaultContinue");
-  var mvaultActionContent = document.getElementById("mvaultActionContent");
-  $(loadindic).detach();
-  $("body").prepend(loadindic);
-  loadindic.style.visibility = "visible";
+  console.log('Sending');
+  $('.output').text('Using test URL');
+  $("body").append('<div id="mvaultModal"></div>');
+  $('#mvaultModal').css({ backgroundColor:'rgba(0,0,0,0.8)', position: 'absolute', left: '0', top: '0', width: '100%', height: '100%' });
+  $('#mvaultModal').html('<div class="loading"><i class="fa fa-spinner fa-2x fa-spin"></i></div>');
+  $('#mvaultModal .loading').css({ color: 'white', position: 'absolute', left: '49%', top: '49%' });
+  var actualUrl = "https://rmpbs.secure.force.com/support/services/apexrest/mvconnext_rtprv/v1.0/provision/kimbia";
+  var actualData = obj;
+  var testUrl   = "https://uat-mywgbh.cs25.force.com/tm/services/apexrest/mvcms/v2.0/provision/a4D1b000000Cx2EEAS?email=cate.twohill@gmail.com&confirmationCode=FJ5SNS0"
+  var testData = {};
+  console.log('Ajax request');
   $.ajax({
-    url: "https://rmpbs.secure.force.com/support/services/apexrest/mvconnext_rtprv/v1.0/provision/kimbia",
-    data: obj,
+    url: testUrl,
+    data: testData,
     method: "GET",
   }).done(function(json) {
     var retObj = JSON.parse(json);
+    console.log('Ajax request done');
     console.log(retObj);
     if (retObj['provisioning'] === 'undefined') {
       Rollbar.error("Provisioning failed: ", json);
-      showFinalModal(loadindic, mvaultContinue, mvaultActionContent, "Communications problem with Server", "Sorry, there was a problem creating your account. Please contact our support department.<br/> +1 855-782-0628 ", "Contact Support", "http://help.pbs.org/");
+      showFinalModal("Communications problem with server", "Sorry, there was a problem creating your account. Please contact our support department.<br/> +1 855-782-0628 ", "Contact Support", "http://help.pbs.org/");
+      console.log('Ajax request bad data');
       return false;
     } else {
-      showFinalModal(loadindic, mvaultContinue, mvaultActionContent, retObj['ctaHeader'], retObj['ctaMsg'], retObj['ctaLabel'], retObj['nextUrl']);
+      showFinalModal(retObj['ctaHeader'], retObj['ctaMsg'], retObj['ctaLabel'], retObj['nextUrl']);
+      console.log('Ajax request success');
     }
   }).fail(function(json) {
-    console.log(json);
+      Rollbar.error("Total failure: ", json);
+      showFinalModal("No response from  server", "Sorry, there was a problem creating your account. Please contact our support department.<br/> +1 855-782-0628 ", "Contact Support", "http://help.pbs.org/");
+      console.log('Ajax request failure');
   });
 }
 
 /* MVaultConnect function */
 var mVaultConnect = function(obj) {
-  debugIt('MVault called');
+  console.log('MVault called');
   if (winHasJSON(obj) !== 'undefined') {
     var confirmationObject = {};
     confirmationObject['confirmationCode'] = obj['confirmationCode'];
     try {
-      debugIt(confirmationObject);
+      console.log(confirmationObject);
       if (true === true ) {
         sendObj(confirmationObject);
       } 
-    } catch (err) {
+    } catch (err) { 
+      console.log('Utter failure');
       Rollbar.error("KIMBIAComplete failed: ", err);
     }
   }
