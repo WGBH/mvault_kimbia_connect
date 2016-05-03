@@ -145,8 +145,7 @@ function sendObj(obj) {
   var station = MSB.stationId;
   var mvaultUrl = MSB.data[station].salesForceUrl;
   var clientData = (station == 'TEST') ? {} : obj;
-  console.log(mvaultUrl);
-  console.log(clientData);
+
   jQuery.ajax({
     url: mvaultUrl,
     data: clientData,
