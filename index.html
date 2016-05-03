@@ -5,7 +5,7 @@
   <title>Passport/MVault Test</title>
   
   <!-- jQuery -->
-  <script src="//code.jquery.com/jquery-2.2.3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     
   <!-- Google Analytics base script -->
   <script>
@@ -23,38 +23,14 @@
     body {
       margin: 0;
       padding: 0;
+      font-family: Helvetica, Arial, sans-serif;
     }
     .wrapper {
       width: 75%;
       min-width: 480px;
       margin: 0 auto;
     }
-/* 
-    #mvaultLoading, #mvaultContinue {
-      visibility: hidden;
-      position: absolute;
-      left: 0px; top: 0px;
-      width:100%; height:100%;
-      text-align:center;
-      z-index: 1000; 
-      background-color:rgba(0,0,0,0.8);
-    }​
-    #mvaultActionContent, #mvaultLoadingInner {
-      text-align: center;
-    }
-    #mvaultActionContent {
-      background-color: #fff;
-      width: 33%;
-      min-width: 300px;
-      margin: 30px auto;
-      border-radius: 0.5em;
-      padding: 15px;
-    }
-    #mvaultLoadingInner {
-      color: #555;
-    }
- */
-</style>
+  </style>
 
 </head>
 <body>
@@ -62,29 +38,23 @@
     <h1> This is a Passport/MVault test</h1>
     <p>Here is my form: </p>
     <div id="myForm">
-        <script src='https://widgets.kimbia.com/widgets/formChooser.js?id=4AECOY9&oncomplete=kimbiaComboTracker'></script>
-  <!-- 
-        <script src='https://widgets.kimbia.com/widgets/form.js?channel=testcampaignv5/38474&oncomplete=kimbiaComboTracker'></script>  
-   -->
+      <script src='https://widgets.kimbia.com/widgets/formChooser.js?id=4AECOY9&oncomplete=kimbiaOnComplete'></script>
+
+<!-- 
+        <script src='https://widgets.kimbia.com/widgets/form.js?channel=pbspassporttest/passporttest&oncomplete=kimbiaOnComplete'></script>
+ -->
     </div>
   
     <div id="output">
-    </div>
-  
-    <!-- mvault modals
-    <div id="mvaultLoading">
-      <div id="mvaultLoadingInner" >
-        <i class="fa fa-spinner fa-2x fa-spin"></i>
-      </div>
-    </div>
-  </div>
-
-  <div id="mvaultContinue" >
-    <div id="mvaultActionContent" >
-    </div>
-  </div>
-  -->
-  <script src="wgbh_kimbia_comboTrackerV2_passport_20160422.js"></script>  
+    </div>  
+  <script src="mvault_kimbia_complete.js"></script>
+<!-- 
+  <script src="https://msb-static.wgbh.org/msb/mvault_kimbia_complete.js"></script>
+ -->
+  <script>
+    MSB.init('TEST');  // Argument: this should be your station brand, e.g. Vegas PBS, WGBH, NHPTV 
+    console.log(MSB);
+  </script>
 </body>
 
 </html>
