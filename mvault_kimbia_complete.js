@@ -8,8 +8,9 @@
 if (typeof jQuery === 'undefined') {
   var s = document.createElement('script');
   s.type = 'text/javascript';
-  s.async = true;
+  s.async = false;
   s.src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js";
+  document.getElementsByTagName('head')[0].appendChild(s);
 }
 
 //Error reporting
@@ -24,6 +25,8 @@ var _rollbarConfig = {
 
 /** Station data  **/
 var MSB = MSB || (function() {
+  var supportMessaging = "Sorry, there was a problem creating your account. <br />Please contact PBS support toll free at ";
+  theObject = this;
   this.stationId = '';
   return {
     init : function(stationId, styleConfig) {
@@ -49,19 +52,15 @@ var MSB = MSB || (function() {
     data: {
       WGBH: {
         salesForceUrl: 'https://mywgbh.secure.force.com/passport/services/apexrest/mvcms/v2.0/provision/a4531000000RzijAAC',
-        phoneSupport: '844-421-3579'
+        phoneSupport:  supportMessaging + '844-421-3579'
       },
       NHPTV: {
         salesForceUrl: 'https://mywgbh.secure.force.com/passport/services/apexrest/mvcms/v2.0/provision/a4531000000RzioAAC',
-        phoneSupport: '844-326-6219'
+        phoneSupport: supportMessaging + '844-326-6219'
       },
       WGBY: {
         salesForceUrl: 'https://mywgbh.secure.force.com/passport/services/apexrest/mvcms/v2.0/provision/a4531000000RzitAAC',
-        phoneSupport: '855-329-4292'
-      },
-      TEST: {
-        salesForceUrl: 'https://uat-mywgbh.cs25.force.com/tm/services/apexrest/mvcms/v2.0/provision/a4D1b000000Cx2EEAS?email=cate.twohill%40gmail.com&confirmationCode=FJ5SNS0',
-        phoneSupport: '844-421-3579'
+        phoneSupport: supportMessaging + '855-329-4292'
       }
     },
     setTheme: function() {
@@ -85,7 +84,7 @@ var MSB = MSB || (function() {
     }, 
     errorMsg:  {
       phone:  function() {
-        return "Sorry, there was a problem creating your account. <br />Please contact PBS support toll free at " + this.data[this.stationId].phoneSupport
+        return 
       },
       helpUrl: "http://help.pbs.org/"
     }
@@ -130,9 +129,11 @@ function showFinalModal(ctaHeader, ctaMsg, ctaLabel, nextUrl) {
   responsePanel +=    "</div>";
   jQuery('#mvaultResponse').html(responsePanel);
 
-  var arr = nextUrl.match(/(\w+-\w+-\w+-\w+)$/)
-  if (arr) {
-    jQuery('#membershipVaultRtProvResp').append("<p>OR activate later by entering your activation code: <br /><strong>" + arr[0] + "</strong><br />at <em>pbs.org/passport</em></p>");
+  if (typeof(nextUrl) !== 'undefined') {
+    var arr = nextUrl.match(/(\w+-\w+-\w+-\w+)$/)
+    if (arr) {
+      jQuery('#membershipVaultRtProvResp').append("<p>OR activate later by entering your activation code: <br /><strong>" + arr[0] + "</strong><br />at <em>pbs.org/passport</em></p>");
+    }
   }
   jQuery('#mvaultResponse').css({ color: MSB.styleOptions.textFontColor, backgroundColor: MSB.styleOptions.panelBackgroundColor, width: '40%', minWidth: '300px', margin: '60px auto', lineHeight: '1.6', borderRadius: '0.5em', padding: '15px', boxShadow: '3px 3px 3px rgba(160, 160, 160, 0.5)'});
 }
@@ -153,18 +154,16 @@ function sendObj(obj) {
   }).done(function(json) {
     var retObj = JSON.parse(json);
     
-    retObj['provisioning'] = 'undefined'
-    
     if (retObj['provisioning'] === 'undefined') {
       Rollbar.error("Provisioning failed: ", json);
-      showFinalModal("Communications problem with server", MSB.errorMsg.phone(), "Online Support", MSB.errorMsg.helpUrl);
+      showFinalModal("Communications problem with server", MSB.data[MSB.stationId].phoneSupport, "Online Support", MSB.helpUrl);
       return false;
     } else {
       showFinalModal(retObj['ctaHeader'], retObj['ctaMsg'], retObj['ctaLabel'], retObj['nextUrl']);
     }
   }).fail(function(json) {
       Rollbar.error("Total failure: ", json);
-      showFinalModal("No response from  server", MSB.errorMsg.phone(), "Online Support", MSB.errorMsg.helpUrl);
+      showFinalModal("No response from  server", MSB.data[MSB.stationId].phoneSupport, "Online Support", MSB.helpUrl);
   });
 }
 
