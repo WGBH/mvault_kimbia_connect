@@ -108,7 +108,7 @@ function winHasJSON(obj) {
 function displayOverlay() {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
   jQuery("body").append('<div id="mvaultModal"></div>');
-  jQuery('#mvaultModal').css({ background: MSB.styleOptions.modalBackground + ' url(https://msb-static.wgbh.org/msb/loading.svg) no-repeat 49% 49%', position: 'fixed', left: '0', top: '0', width: '100%', height: '100%', zIndex: 10000 });
+  jQuery('#mvaultModal').css({ background: MSB.styleOptions.modalBackground + ' url(https://msb-static.wgbh.org/msb/loading.svg) no-repeat 49% 49%', position: 'fixed', left: '0', top: '0', width: '100%', height: '100%', zIndex: 10000, textAlign: 'center' });
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 }
 
