@@ -14,7 +14,7 @@
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-339013-24', 'auto');  // wgbh.org property ID
   ga('send', 'pageview');
@@ -54,7 +54,13 @@
   <script src="https://msb-static.wgbh.org/msb/mvault_kimbia_complete.js"></script>
  -->
   <script>
-    MSB.init('TEST');  // Argument: this should be your station brand, e.g. Vegas PBS, WGBH, NHPTV 
+//     MSB.init('TEST');  // Argument: this should be your station brand, e.g. Vegas PBS, WGBH, NHPTV 
+    var stationData = {
+      stationId: 'TEST',
+      mVaultUrl: 'https://uat-mywgbh.cs25.force.com/tm/services/apexrest/mvcms/v2.0/provision/a4D1b000000Cx2EEAS?email=cate.twohill@gmail.com&confirmationCode=FJ5SNS0',
+      phoneSupport: '855-555-1212'
+    };
+    MSB.init(stationData);
     console.log(MSB);
   </script>
 </body>

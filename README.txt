@@ -9,18 +9,35 @@ MSB Passport How-to
 
 <script src="https://msb-static.wgbh.org/msb/mvault_kimbia_complete.js"></script>
 <script>
-  var options = {
-    theme: 'light'
-  };
-  MSB.init('<YOUR STATION SHORT NAME HERE>', options);  // Argument: this should be your station brand, e.g. Vegas PBS, WGBH, NHPTV 
+  var stationData = {
+    stationId: '<YOUR STATION SHORT NAME HERE>',
+    mVaultUrl: '<YOUR MVAULT URL HERE>','https://uat-mywgbh.cs25.force.com/tm/services/apexrest/mvcms/v2.0/provision/a4D1b000000Cx2EEAS?email=cate.twohill@gmail.com&confirmationCode=FJ5SNS0',
+    phoneSupport: '<YOUR PBS SUPPORT # HERE>'
+  };  
+  MSB.init(stationData, options); 
 </script>
 
 
-- Change <YOUR STATION SHORT NAME HERE> as appropriate: NHPTV, WGBY, etc.
+********************************************
+
+NOTES:
+
+- stationData example:
+var stationData = {
+  stationId: 'WGBH',
+  mVaultUrl: 'https://wgbh.cs77.force.com/tm/services/apexrest/mvcms/v2.0/provision/a4abbbbcc2EEAS',
+  phoneSupport: '888-555-1212'
+};  
+
+options argument:
+
+The options argument is a javascript object and is NOT REQUIRED
 
 - You have options for two different themes: 
-  - 'light' = white message modal with dark overlay
+  - 'light' = white message modal with dark overlay (DEFAULT)
   - 'dark'  = dark message modal with white overlay
+  
+So if the options argument is left out, the light theme is automatically selected.
   
 - Customizable CSS options for styling and defaults:
 UNIVERSAL
